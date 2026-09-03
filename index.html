@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FRNCZ design — Web Design & Desenvolvimento</title>
+<meta name="description" content="Portfólio de FRNCZ design — criação de sites modernos, responsivos e personalizados para negócios e marcas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bg-elev:#111113;
+    --bg-card:#141416;
+    --line:rgba(255,255,255,.1);
+    --line-soft:rgba(255,255,255,.06);
+    --text:#f2f1ec;
+    --text-dim:#98989e;
+    --text-dimmer:#6a6a70;
+    --accent:#3d5fff;
+    --accent-2:#7d93ff;
+    --accent-soft:rgba(61,95,255,.14);
+    --radius:2px;
+    --ease:cubic-bezier(.16,1,.3,1);
+    --maxw:1200px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  h1,h2,h3,h4{margin:0;font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.01em;}
+  p{margin:0;}
+  button{font-family:inherit;}
+
+  ::selection{background:var(--accent);color:#fff;}
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  .eyebrow{
+    font-size:.78rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    font-weight:500;
+  }
+
+  .accent{color:var(--accent);}
+
+  /* ===== Reveal on scroll ===== */
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .7s var(--ease), transform .7s var(--ease);
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:none;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+
+  /* ===== Header ===== */
+  header.site-header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    background:rgba(10,10,11,.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s var(--ease), background .3s var(--ease);
+  }
+  header.site-header.scrolled{
+    border-bottom-color:var(--line-soft);
+  }
+  .header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:76px;
+  }
+  .logo{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:-.01em;
+  }
+  .logo span{color:var(--accent);}
+
+  nav.main-nav{
+    display:flex;
+    align-items:center;
+    gap:40px;
+  }
+  nav.main-nav ul{
+    display:flex;
+    gap:32px;
+  }
+  nav.main-nav a{
+    font-size:.92rem;
+    color:var(--text-dim);
+    position:relative;
+    padding:4px 0;
+    transition:color .25s var(--ease);
+  }
+  nav.main-nav a:hover,
+  nav.main-nav a:focus-visible{color:var(--text);}
+  nav.main-nav a::after{
+    content:'';
+    position:absolute;
+    left:0;bottom:0;
+    width:0%;
+    height:1px;
+    background:var(--accent);
+    transition:width .3s var(--ease);
+  }
+  nav.main-nav a:hover::after,
+  nav.main-nav a:focus-visible::after{width:100%;}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:13px 26px;
+    font-size:.88rem;
+    font-weight:500;
+    border-radius:var(--radius);
+    border:1px solid transparent;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease);
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#fff;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus-visible{
+    background:#2f4fe0;
+    transform:translateY(-1px);
+  }
+  .btn-outline{
+    border-color:var(--line);
+    color:var(--text);
+    background:transparent;
+  }
+  .btn-outline:hover,
+  .btn-outline:focus-visible{
+    border-color:var(--accent);
+    color:var(--accent);
+  }
+  .btn-block{width:100%;}
+
+  .header-cta{display:flex;align-items:center;}
+
+  .hamburger{
+    display:none;
+    width:44px;height:44px;
+    align-items:center;justify-content:center;
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    cursor:pointer;
+  }
+  .hamburger span{
+    display:block;
+    width:18px;height:1px;
+    background:var(--text);
+    position:relative;
+    transition:transform .3s var(--ease), opacity .3s var(--ease), background .3s var(--ease);
+  }
+  .hamburger span::before,.hamburger span::after{
+    content:'';
+    position:absolute;left:0;
+    width:18px;height:1px;
+    background:var(--text);
+    transition:transform .3s var(--ease), opacity .3s var(--ease);
+  }
+  .hamburger span::before{top:-6px;}
+  .hamburger span::after{top:6px;}
+  .hamburger[aria-expanded="true"] span{background:transparent;}
+  .hamburger[aria-expanded="true"] span::before{transform:translateY(6px) rotate(45deg);}
+  .hamburger[aria-expanded="true"] span::after{transform:translateY(-6px) rotate(-45deg);}
+
+  .mobile-panel{
+    position:fixed;
+    inset:76px 0 0 0;
+    background:var(--bg);
+    z-index:99;
+    padding:40px 32px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transform:translateY(-8px);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease);
+  }
+  .mobile-panel.open{
+    opacity:1;
+    transform:none;
+    pointer-events:auto;
+  }
+  .mobile-panel ul{display:flex;flex-direction:column;gap:6px;}
+  .mobile-panel a{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.9rem;
+    font-weight:600;
+    padding:14px 0;
+    border-bottom:1px solid var(--line-soft);
+    display:block;
+  }
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    padding:190px 0 120px;
+    border-bottom:1px solid var(--line-soft);
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr 220px;
+    gap:40px;
+    align-items:start;
+  }
+  .hero-num{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:5.5rem;
+    font-weight:700;
+    color:var(--bg-card);
+    -webkit-text-stroke:1px var(--line);
+    line-height:1;
+    position:absolute;
+    top:150px;
+    right:32px;
+    user-select:none;
+    z-index:0;
+  }
+  .hero-content{position:relative;z-index:1;}
+  .hero-eyebrow{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:28px;
+  }
+  .hero-eyebrow .dash{
+    width:32px;height:1px;
+    background:var(--accent);
+  }
+  .hero h1{
+    font-size:clamp(2.5rem, 5.6vw, 4.6rem);
+    line-height:1.06;
+    max-width:15ch;
+    letter-spacing:-.02em;
+  }
+  .hero-sub{
+    margin-top:30px;
+    max-width:46ch;
+    color:var(--text-dim);
+    font-size:1.08rem;
+    line-height:1.7;
+  }
+  .hero-actions{
+    margin-top:44px;
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .hero-side{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:18px;
+    padding-top:8px;
+  }
+  .hero-side .loc{
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+    font-size:.75rem;
+    letter-spacing:.16em;
+    color:var(--text-dimmer);
+    text-transform:uppercase;
+  }
+  .hero-side .vline{
+    width:1px;
+    height:110px;
+    background:linear-gradient(var(--line), transparent);
+  }
+
+  /* ===== Section shell ===== */
+  section{
+    padding:130px 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:40px;
+    margin-bottom:64px;
+  }
+  .section-head h2{
+    font-size:clamp(2rem, 3.4vw, 2.9rem);
+    margin-top:14px;
+    letter-spacing:-.02em;
+  }
+  .section-head p{
+    max-width:34ch;
+    color:var(--text-dim);
+    padding-bottom:6px;
+    font-size:.98rem;
+  }
+
+  /* ===== Projects ===== */
+  .projects-list{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .project-card{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:56px;
+    align-items:center;
+    padding:56px 0;
+    border-top:1px solid var(--line-soft);
+    position:relative;
+  }
+  .project-card:last-child{border-bottom:1px solid var(--line-soft);}
+  .project-media{
+    position:relative;
+    aspect-ratio:4/3;
+    overflow:hidden;
+    border-radius:var(--radius);
+    background:var(--bg-card);
+    border:1px solid var(--line-soft);
+  }
+  .project-media img{
+    width:100%;height:100%;
+    object-fit:cover;
+    transition:transform .6s var(--ease);
+  }
+  .project-media-link{
+    display:block;
+    width:100%;height:100%;
+    cursor:pointer;
+    position:relative;
+    z-index:2;
+  }
+  .project-media .fallback{
+    position:absolute;inset:0;
+    z-index:1;
+    pointer-events:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:10px;
+    background:
+      radial-gradient(circle at 30% 20%, var(--accent-soft), transparent 60%),
+      repeating-linear-gradient(135deg, var(--line-soft) 0 1px, transparent 1px 26px);
+  }
+  .project-media .fallback .fb-label{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.6rem;
+    font-weight:600;
+    color:var(--text-dimmer);
+    letter-spacing:-.02em;
+    text-align:center;
+    padding:0 20px;
+  }
+  .project-card:hover .project-media img{transform:scale(1.045);}
+  .project-card:not(.is-soon):hover{transform:translateY(-4px);}
+  .project-card{transition:transform .4s var(--ease);}
+
+  .project-corner{
+    position:absolute;
+    top:14px;left:14px;
+    width:9px;height:9px;
+    border-top:1px solid var(--accent);
+    border-left:1px solid var(--accent);
+    opacity:0;
+    transition:opacity .35s var(--ease);
+  }
+  .project-corner.br{
+    top:auto;left:auto;
+    bottom:14px;right:14px;
+    border-top:none;border-left:none;
+    border-bottom:1px solid var(--accent);
+    border-right:1px solid var(--accent);
+  }
+  .project-card:hover .project-corner{opacity:1;}
+
+  .project-info .p-num{
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--text-dimmer);
+    font-size:.85rem;
+    margin-bottom:18px;
+    letter-spacing:.05em;
+  }
+  .project-info .p-cat{
+    font-size:.75rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+    font-weight:500;
+  }
+  .project-info h3{
+    font-size:2rem;
+    margin-bottom:16px;
+  }
+  .project-info .p-desc{
+    color:var(--text-dim);
+    max-width:44ch;
+    margin-bottom:22px;
+  }
+  .p-stack{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:26px;
+  }
+  .p-stack span{
+    font-size:.72rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--text-dimmer);
+    border:1px solid var(--line);
+    padding:6px 11px;
+    border-radius:var(--radius);
+  }
+  .p-link{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    font-size:.9rem;
+    font-weight:500;
+    color:var(--text);
+    border-bottom:1px solid var(--line);
+    padding-bottom:4px;
+    transition:border-color .25s var(--ease), color .25s var(--ease), gap .25s var(--ease);
+  }
+  .p-link:hover,.p-link:focus-visible{
+    color:var(--accent);
+    border-color:var(--accent);
+    gap:14px;
+  }
+  .p-link svg{width:14px;height:14px;flex-shrink:0;}
+
+  .project-card.is-soon{opacity:.72;}
+  .project-card.is-soon .project-media{filter:grayscale(.3);}
+  .project-card.is-soon .p-link{
+    color:var(--text-dimmer);
+    cursor:default;
+    pointer-events:none;
+  }
+  .badge-demo{
+    display:inline-block;
+    font-size:.68rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--text-dimmer);
+    border:1px solid var(--line);
+    padding:5px 10px;
+    border-radius:var(--radius);
+    margin-top:20px;
+  }
+
+  /* ===== About ===== */
+  .about-grid{
+    display:grid;
+    grid-template-columns:.85fr 1fr;
+    gap:70px;
+  }
+  .about-visual{
+    position:relative;
+    padding-top:12px;
+  }
+  .about-visual .big-quote{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:5rem;
+    line-height:1;
+    color:var(--accent);
+    margin-bottom:24px;
+  }
+  .about-visual .vline2{
+    width:1px;height:70%;
+    background:var(--line);
+    position:absolute;
+    top:0;right:0;
+  }
+  .about-text p{
+    color:var(--text-dim);
+    font-size:1.06rem;
+    line-height:1.8;
+    max-width:56ch;
+    margin-bottom:22px;
+  }
+  .about-text p strong{color:var(--text);font-weight:500;}
+  .about-list{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px 30px;
+  }
+  .about-list li{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    padding:16px 0;
+    border-top:1px solid var(--line-soft);
+    font-size:.92rem;
+    color:var(--text-dim);
+  }
+  .about-list li .n{
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--accent);
+    font-size:.82rem;
+  }
+
+  /* ===== Services ===== */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line-soft);
+    border:1px solid var(--line-soft);
+  }
+  .service-card{
+    background:var(--bg);
+    padding:40px 28px;
+    min-height:260px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:background .3s var(--ease);
+    position:relative;
+  }
+  .service-card:hover{background:var(--bg-elev);}
+  .service-card .s-num{
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--text-dimmer);
+    font-size:.9rem;
+  }
+  .service-card h3{
+    font-size:1.15rem;
+    margin:26px 0 12px;
+  }
+  .service-card p{
+    color:var(--text-dim);
+    font-size:.92rem;
+    line-height:1.6;
+  }
+  .service-card .dot{
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--accent);
+    opacity:0;
+    transition:opacity .3s var(--ease);
+    margin-top:20px;
+  }
+  .service-card:hover .dot{opacity:1;}
+
+  /* ===== Process ===== */
+  .timeline{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    position:relative;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    top:11px;left:0;right:0;
+    height:1px;
+    background:var(--line);
+  }
+  .t-step{
+    padding-right:30px;
+    position:relative;
+  }
+  .t-dot{
+    width:11px;height:11px;
+    border-radius:50%;
+    background:var(--bg);
+    border:1px solid var(--accent);
+    position:relative;
+    z-index:1;
+    margin-bottom:28px;
+  }
+  .t-step.is-active .t-dot{background:var(--accent);}
+  .t-step .t-label{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.85rem;
+    color:var(--text-dimmer);
+    margin-bottom:8px;
+  }
+  .t-step h3{
+    font-size:1.25rem;
+    margin-bottom:12px;
+  }
+  .t-step p{
+    color:var(--text-dim);
+    font-size:.92rem;
+    line-height:1.65;
+    max-width:26ch;
+  }
+
+  /* ===== CTA ===== */
+  .cta-section{
+    padding:150px 0;
+    text-align:center;
+    position:relative;
+  }
+  .cta-section h2{
+    font-size:clamp(2.1rem, 5vw, 3.6rem);
+    max-width:18ch;
+    margin:0 auto;
+    line-height:1.14;
+    letter-spacing:-.02em;
+  }
+  .cta-section .hero-sub{
+    margin:26px auto 46px;
+    text-align:center;
+  }
+  .cta-line{
+    width:1px;height:60px;
+    background:linear-gradient(var(--line), transparent);
+    margin:0 auto 30px;
+  }
+
+  /* ===== Contact ===== */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line-soft);
+    border:1px solid var(--line-soft);
+    margin-bottom:26px;
+  }
+  .contact-card{
+    background:var(--bg);
+    padding:38px 30px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    transition:background .3s var(--ease);
+  }
+  .contact-card:hover{background:var(--bg-elev);}
+  .contact-card .c-label{
+    font-size:.75rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--text-dimmer);
+  }
+  .contact-card .c-value{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.2rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .contact-card svg{width:16px;height:16px;color:var(--text-dimmer);transition:transform .25s var(--ease), color .25s var(--ease);}
+  .contact-card:hover svg{color:var(--accent);transform:translate(3px,-3px);}
+  .contact-note{
+    color:var(--text-dimmer);
+    font-size:.85rem;
+    text-align:center;
+  }
+
+  /* ===== Footer ===== */
+  footer{
+    padding:70px 0 40px;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:40px;
+    padding-bottom:50px;
+    border-bottom:1px solid var(--line-soft);
+    flex-wrap:wrap;
+  }
+  .footer-brand .logo{margin-bottom:12px;}
+  .footer-brand p{color:var(--text-dimmer);font-size:.9rem;}
+  footer nav ul{display:flex;gap:26px;flex-wrap:wrap;}
+  footer nav a{
+    font-size:.88rem;
+    color:var(--text-dim);
+    transition:color .25s var(--ease);
+  }
+  footer nav a:hover,footer nav a:focus-visible{color:var(--text);}
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:28px;
+    color:var(--text-dimmer);
+    font-size:.8rem;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width:1024px){
+    .wrap{padding:0 26px;}
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-side{
+      flex-direction:row;
+      align-items:center;
+      justify-content:flex-start;
+      margin-top:20px;
+    }
+    .hero-side .loc{writing-mode:horizontal-tb;}
+    .hero-side .vline{width:44px;height:1px;}
+    .hero-num{display:none;}
+    .project-card{grid-template-columns:1fr;gap:26px;}
+    .about-grid{grid-template-columns:1fr;gap:44px;}
+    .about-visual .vline2{display:none;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .timeline{grid-template-columns:repeat(2,1fr);row-gap:50px;}
+    .timeline::before{display:none;}
+    .contact-grid{grid-template-columns:1fr;}
+  }
+
+  @media (max-width:760px){
+    nav.main-nav ul,.header-cta .btn-primary{display:none;}
+    .hamburger{display:flex;}
+    section{padding:90px 0;}
+    .hero{padding:150px 0 80px;}
+    .section-head{flex-direction:column;align-items:flex-start;gap:14px;}
+    .services-grid{grid-template-columns:1fr;}
+    .about-list{grid-template-columns:1fr;}
+    .cta-section{padding:100px 0;}
+    .footer-top{flex-direction:column;gap:26px;}
+    .wrap{padding:0 20px;}
+    .hero-actions .btn{flex:1 1 auto;}
+  }
+
+  @media (max-width:420px){
+    .hero h1{font-size:2.15rem;}
+    .project-info h3{font-size:1.6rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="#top" class="logo">FRNCZ <span>design</span></a>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <ul>
+        <li><a href="#top">Início</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-cta">
+      <a href="#contato" class="btn btn-primary">Vamos conversar</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobilePanel">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <nav aria-label="Navegação mobile">
+    <ul>
+      <li><a href="#top" class="mobile-link">Início</a></li>
+      <li><a href="#projetos" class="mobile-link">Projetos</a></li>
+      <li><a href="#sobre" class="mobile-link">Sobre</a></li>
+      <li><a href="#servicos" class="mobile-link">Serviços</a></li>
+      <li><a href="#contato" class="mobile-link">Contato</a></li>
+    </ul>
+  </nav>
+  <a href="#contato" class="btn btn-primary btn-block mobile-link">Vamos conversar</a>
+</div>
+
+<main id="top">
+
+  <section class="hero">
+    <span class="hero-num" aria-hidden="true">01</span>
+    <div class="wrap hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="dash" aria-hidden="true"></span>
+          <span class="eyebrow">Web design &amp; desenvolvimento</span>
+        </div>
+        <h1>Eu crio sites que fazem <span class="accent">negócios parecerem maiores.</span></h1>
+        <p class="hero-sub">Sites modernos, rápidos e responsivos para marcas que querem ter uma presença digital de verdade.</p>
+        <div class="hero-actions">
+          <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+          <a href="#contato" class="btn btn-outline">Fale comigo</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <span class="loc">Based in São Paulo</span>
+        <span class="vline" aria-hidden="true"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Trabalho</span>
+          <h2>Projetos selecionados.</h2>
+        </div>
+        <p>Alguns projetos criados para transformar ideias e negócios em experiências digitais.</p>
+      </div>
+
+      <div class="projects-list">
+
+        <article class="project-card reveal">
+          <div class="project-media">
+            <span class="project-corner" aria-hidden="true"></span>
+            <span class="project-corner br" aria-hidden="true"></span>
+            <a href="https://brasa-27.lucasfrancez01.workers.dev/" class="project-media-link" target="_blank" rel="noopener noreferrer" aria-label="Abrir o site Brasa 27 em nova aba">
+              <img src="brasa-27.jpg" alt="Landing page do projeto Brasa 27, hamburgueria artesanal fictícia" onerror="this.style.display='none'; this.parentElement.parentElement.classList.add('img-error')">
+            </a>
+            <div class="fallback"><span class="fb-label">Brasa 27</span></div>
+          </div>
+          <div class="project-info">
+            <div class="p-num">Projeto 01</div>
+            <div class="p-cat">Hamburgueria artesanal</div>
+            <h3>Brasa 27</h3>
+            <p class="p-desc">Landing page para uma hamburgueria fictícia, criada com foco em identidade visual, apresentação dos produtos e conversão.</p>
+            <div class="p-stack">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <a href="https://brasa-27.lucasfrancez01.workers.dev/" class="p-link" target="_blank" rel="noopener noreferrer">Ver projeto
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+            </a>
+            <div><span class="badge-demo">Projeto de portfólio / demonstração</span></div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-media">
+            <span class="project-corner" aria-hidden="true"></span>
+            <span class="project-corner br" aria-hidden="true"></span>
+            <a href="https://zona-norte-fitness.lucasfrancez01.workers.dev/" class="project-media-link" target="_blank" rel="noopener noreferrer" aria-label="Abrir o site Zona Norte Fitness em nova aba">
+              <img src="zona-norte-fitness.jpg" alt="Site institucional do projeto Zona Norte Fitness, academia fictícia" onerror="this.style.display='none'; this.parentElement.parentElement.classList.add('img-error')">
+            </a>
+            <div class="fallback"><span class="fb-label">Zona Norte Fitness</span></div>
+          </div>
+          <div class="project-info">
+            <div class="p-num">Projeto 02</div>
+            <div class="p-cat">Academia</div>
+            <h3>Zona Norte Fitness</h3>
+            <p class="p-desc">Site institucional fictício para uma academia, com foco em estrutura, modalidades, planos e geração de novos alunos.</p>
+            <div class="p-stack">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <a href="https://zona-norte-fitness.lucasfrancez01.workers.dev/" class="p-link" target="_blank" rel="noopener noreferrer">Ver projeto
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+            </a>
+            <div><span class="badge-demo">Projeto de portfólio / demonstração</span></div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-media">
+            <span class="project-corner" aria-hidden="true"></span>
+            <span class="project-corner br" aria-hidden="true"></span>
+            <a href="https://north-barber.lucasfrancez01.workers.dev/" class="project-media-link" target="_blank" rel="noopener noreferrer" aria-label="Abrir o site North Barber em nova aba">
+              <img src="north-barber.jpg" alt="Site do projeto North Barber, criado para uma barbearia fictícia" onerror="this.style.display='none'; this.parentElement.parentElement.classList.add('img-error')">
+            </a>
+            <div class="fallback"><span class="fb-label">North Barber</span></div>
+          </div>
+          <div class="project-info">
+            <div class="p-num">Projeto 03</div>
+            <div class="p-cat">Barbearia</div>
+            <h3>North Barber</h3>
+            <p class="p-desc">Site criado para uma barbearia fictícia, com foco em identidade visual, apresentação dos serviços e agendamento.</p>
+            <div class="p-stack">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <a href="https://north-barber.lucasfrancez01.workers.dev/" class="p-link" target="_blank" rel="noopener noreferrer">Ver projeto
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+            </a>
+            <div><span class="badge-demo">Projeto de portfólio / demonstração</span></div>
+          </div>
+        </article>
+
+        <article class="project-card is-soon reveal">
+          <div class="project-media">
+            <img src="projeto-03.jpg" alt="Prévia do próximo projeto, ainda em desenvolvimento" onerror="this.style.display='none'; this.parentElement.classList.add('img-error')">
+            <div class="fallback"><span class="fb-label">Em breve</span></div>
+          </div>
+          <div class="project-info">
+            <div class="p-num">Projeto 04</div>
+            <div class="p-cat">Em breve</div>
+            <h3>Novo projeto</h3>
+            <p class="p-desc">Novo projeto em desenvolvimento.</p>
+            <a href="#" class="p-link" aria-disabled="true" tabindex="-1">Em breve</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="wrap about-grid">
+      <div class="about-visual reveal">
+        <span class="vline2" aria-hidden="true"></span>
+        <div class="big-quote">“</div>
+        <span class="eyebrow">Sobre mim</span>
+      </div>
+      <div class="about-text reveal">
+        <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin-bottom:30px;">Por trás dos sites.</h2>
+        <p>Sou <strong>Lucas Francez</strong> e estou construindo meu caminho no desenvolvimento de sites, criando experiências digitais modernas, responsivas e pensadas para cada negócio.</p>
+        <p>Meu foco é transformar uma ideia ou negócio em um site que passe confiança, tenha uma boa experiência no celular e ajude a marca a se apresentar melhor na internet.</p>
+
+        <ul class="about-list">
+          <li><span class="n">01</span> Design moderno</li>
+          <li><span class="n">02</span> Responsivo</li>
+          <li><span class="n">03</span> Performance</li>
+          <li><span class="n">04</span> Atenção aos detalhes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Serviços</span>
+          <h2>O que eu posso criar.</h2>
+        </div>
+      </div>
+
+      <div class="services-grid reveal">
+        <div class="service-card">
+          <div class="s-num">01</div>
+          <div>
+            <h3>Landing pages</h3>
+            <p>Páginas focadas em apresentar produtos, serviços ou campanhas.</p>
+          </div>
+          <span class="dot" aria-hidden="true"></span>
+        </div>
+        <div class="service-card">
+          <div class="s-num">02</div>
+          <div>
+            <h3>Sites institucionais</h3>
+            <p>Sites completos para empresas e negócios locais.</p>
+          </div>
+          <span class="dot" aria-hidden="true"></span>
+        </div>
+        <div class="service-card">
+          <div class="s-num">03</div>
+          <div>
+            <h3>Páginas para negócios</h3>
+            <p>Sites pensados para restaurantes, academias, lojas e outros negócios.</p>
+          </div>
+          <span class="dot" aria-hidden="true"></span>
+        </div>
+        <div class="service-card">
+          <div class="s-num">04</div>
+          <div>
+            <h3>Design responsivo</h3>
+            <p>Experiência adaptada para computador, tablet e celular.</p>
+          </div>
+          <span class="dot" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="processo">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Processo</span>
+          <h2>Do zero ao site.</h2>
+        </div>
+      </div>
+
+      <div class="timeline reveal">
+        <div class="t-step is-active">
+          <div class="t-dot" aria-hidden="true"></div>
+          <div class="t-label">01 — Conversa</div>
+          <h3>Entendimento</h3>
+          <p>Entendo o negócio, objetivo e público.</p>
+        </div>
+        <div class="t-step is-active">
+          <div class="t-dot" aria-hidden="true"></div>
+          <div class="t-label">02 — Conceito</div>
+          <h3>Direção</h3>
+          <p>Defino estrutura, identidade visual e direção do projeto.</p>
+        </div>
+        <div class="t-step is-active">
+          <div class="t-dot" aria-hidden="true"></div>
+          <div class="t-label">03 — Desenvolvimento</div>
+          <h3>Construção</h3>
+          <p>Transformo o conceito em um site funcional e responsivo.</p>
+        </div>
+        <div class="t-step">
+          <div class="t-dot" aria-hidden="true"></div>
+          <div class="t-label">04 — Entrega</div>
+          <h3>Publicação</h3>
+          <p>Faço os ajustes finais e deixo o projeto pronto para publicação.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="wrap">
+      <div class="cta-line reveal" aria-hidden="true"></div>
+      <h2 class="reveal">Tem uma ideia? Vamos colocar na web.</h2>
+      <p class="hero-sub reveal">Se você tem um negócio e quer uma presença digital mais profissional, vamos conversar.</p>
+      <a href="#contato" class="btn btn-primary reveal">Fale comigo</a>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Contato</span>
+          <h2>Vamos conversar.</h2>
+        </div>
+        <p>Quer tirar um projeto do papel? Entre em contato.</p>
+      </div>
+
+      <div class="contact-grid reveal" style="grid-template-columns:repeat(2,1fr);">
+        <a href="https://wa.me/5511917576638?text=Ol%C3%A1%21%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20site." class="contact-card" target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp">
+          <span class="c-label">WhatsApp</span>
+          <span class="c-value">Conversar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+          </span>
+        </a>
+        <a href="mailto:lucasfrancez01@gmail.com" class="contact-card" aria-label="Enviar e-mail para lucasfrancez01@gmail.com">
+          <span class="c-label">E-mail</span>
+          <span class="c-value">Enviar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo">FRNCZ <span>design</span></a>
+        <p>Web design &amp; desenvolvimento.</p>
+      </div>
+      <nav aria-label="Navegação do rodapé">
+        <ul>
+          <li><a href="#top">Início</a></li>
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Lucas Francez. Todos os direitos reservados.</span>
+      <span>Projeto de portfólio.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var header = document.getElementById('siteHeader');
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var mobilePanel = document.getElementById('mobilePanel');
+  var mobileLinks = document.querySelectorAll('.mobile-link');
+
+  // Header shadow / border on scroll
+  function onScroll(){
+    if(window.scrollY > 12){
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // Mobile menu toggle
+  function closeMenu(){
+    mobilePanel.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded','false');
+    hamburgerBtn.setAttribute('aria-label','Abrir menu');
+    document.body.style.overflow = '';
+  }
+  function openMenu(){
+    mobilePanel.classList.add('open');
+    hamburgerBtn.setAttribute('aria-expanded','true');
+    hamburgerBtn.setAttribute('aria-label','Fechar menu');
+    document.body.style.overflow = 'hidden';
+  }
+  hamburgerBtn.addEventListener('click', function(){
+    var isOpen = mobilePanel.classList.contains('open');
+    if(isOpen){ closeMenu(); } else { openMenu(); }
+  });
+  mobileLinks.forEach(function(link){
+    link.addEventListener('click', closeMenu);
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeMenu(); }
+  });
+
+  // Reveal on scroll
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal');
+
+  if('IntersectionObserver' in window && !reduceMotion){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+})();
+</script>
+
+</body>
+</html>
